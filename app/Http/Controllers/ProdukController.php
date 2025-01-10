@@ -12,7 +12,10 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        //
+        $title = 'Produk';
+        $subtitle = 'Index';
+        $produks = Produk::all();
+        return view('admin.produk.index',compact('title','subtitle','produks'));
     }
 
     /**
@@ -20,7 +23,10 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Produk';
+        $subtitle = 'Create';
+        $produks = Produk::all();
+        return view('admin.produk.create', compact('title','subtitle'));
     }
 
     /**
