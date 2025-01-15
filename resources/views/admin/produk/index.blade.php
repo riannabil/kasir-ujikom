@@ -39,6 +39,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Produk</th>
+                                        <th>Harga</th>
                                         <th>Stok</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -46,10 +47,20 @@
                                 <tbody>
                                     @foreach ($produks as $produk)
                                         <tr>
-                                            <td>{{ $loop->interation }}</td>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $produk->NamaProduk }}</td>
-                                            <td>{{ $produk->Harga }}</td>
+                                            <td>{{ rupiah($produk->Harga) }}</td>
                                             <td>{{ $produk->stok }}</td>
+                                            <td><a href="{{ route('produk.edit', $produk->id) }}"
+                                                    class="btn btn-sm btn-warning">Edit</a>
+                                                <form action="{{ route('produk.destroy', $produk->id) }}" method="POST"
+                                                    style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger"
+                                                        onclick="return confirm('Yakin ingin menghapus?')">Delete</button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

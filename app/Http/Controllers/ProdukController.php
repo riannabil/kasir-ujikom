@@ -34,7 +34,18 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'NamaProduk' => 'required|string|max:255',
+            'Harga' => 'required|numeric|min:0',
+            'stok' => 'required|integer|min:0'
+        ]);
+       $simpan = Produk::create($validateData);
+       if ($simpan) {
+        return response()->json(['status'=>200,'message'=>'Produk Berhasil']);
+       }else{
+        return response()->json(['status'=>500,'message'=>'Produk Gagal']);
+       }
+        // return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan.');
     }
 
     /**
@@ -48,9 +59,14 @@ class ProdukController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Produk $produk)
+    public function edit($id)
     {
-        //
+        $title = 'Produk';
+        $subtitle = 'Edit';
+        $Produk = Produk::find($id);
+
+        return view('admin.produk.edit',compact('title','subtitle','Produk'));
+
     }
 
     /**
@@ -58,7 +74,18 @@ class ProdukController extends Controller
      */
     public function update(Request $request, Produk $produk)
     {
-        //
+        $validateData = $request->validate([
+            'NamaProduk' => 'required',
+            'Harga' => 'required|numeric',
+            'Stok' => 'required|numeric'
+        ]);
+
+        $simpan = $produk->update($validateData);
+        if ($simpan){
+            return response()->json(['status' => 200, 'message' =>'Produk Berhasil Diubah']);
+        } else {
+            return response()->json(['status' => 200, 'message' =>'Produk Gagal']);
+        }
     }
 
     /**
